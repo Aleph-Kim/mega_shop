@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+    <tr class="text-center thead-dark">
+        <th>상품 번호</th>
+        <th style="width:50%">상품 이름</th>
+        <th>상품 가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if product_list %}
+    {% for product in product_list %}
+    <tr class="text-center">
+        <td>{{ product.id }}</td>
+        <td><a href="{% url 'products:detail' product.id %}">{{ product.display_name}}</a></td>
+        <td>{{ product.sale_price }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="3">상품이 없습니다.</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2 class="border-bottom py-2">{{ product.display_name }}</h2>
+<h3 class="border-bottom py-2">상품 번호 : {{ product.id }}</h3>
+<h3 class="border-bottom py-2">가격 : {{ product.sale_price }}</h3>
+<h3 class="border-bottom py-2">마켓 이름 :{{ product.market.name }}</h3>
+
+{% for question in question_list %}
+<div>{{ question.body }}</div>
+<div class="my-3">
+    <a href="{% url 'products:question_modify' product.id question.id %}"
+       class="btn btn-sm btn-outline-secondary">수정</a>
+    <a href="{% url 'products:question_delete' product.id question.id %}"
+       class="btn btn-sm btn-outline-secondary">삭제</a>
+</div>
+{% endfor %}
+<form action="{% url 'products:question_create' product.id %}" method="post" class="my-3">
+    {% csrf_token %}
+    {% if form.errors %}
+    <div class="alert alert-dange" role="alert">
+        {% for field in form %}
+        {% if field.errors %}
+        <strong>{{field.label}}</strong>
+        {{field.errors}}
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <input type="submit" value="질문하기" class="btn btn-primary">
+</form>
+{% endblock %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".delete").on('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
