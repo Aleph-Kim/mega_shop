@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -9,6 +11,7 @@ from questions.form import QuestionForm
 from questions.models import Question
 
 
+@login_required(login_url='accounts:login')
 def create(request, product_id):
     if request.method == "POST":
         form = QuestionForm(request.POST)
@@ -20,14 +23,18 @@ def create(request, product_id):
             question.object_id = product_id
             question.save()
             return redirect('products:detail', product_id)
-        else:
-            form = QuestionForm()
-        context = {'form': form}
-        return render(request, 'questions/question_form.html', context)
+    else:
+        form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'questions/question_form.html', context)
 
 
+@login_required(login_url='accounts:login')
 def modify(request, product_id, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.user:
+        messages.error(request, '수정 권한이 없습니다.')
+        return redirect('products:detail', product_id)
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)
         if form.is_valid():
@@ -41,7 +48,11 @@ def modify(request, product_id, question_id):
     return render(request, 'questions/question_form.html', context)
 
 
+@login_required(login_url='accounts:login')
 def delete(request, product_id, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.user:
+        messages.error(request, '삭제 권한이 없습니다.')
+        return redirect('products:detail', product_id)
     question.delete()
     return redirect('products:detail', product_id)

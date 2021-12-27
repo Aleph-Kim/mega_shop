@@ -18,10 +18,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from base import views
+
+app_name = 'basic'
+
 urlpatterns = [
     path('accounts/', include('accounts.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('products/', include('products.urls')),
+    path('', views.basePage, name='basePage'),
 ]
 
 if settings.DEBUG:

@@ -6,18 +6,20 @@
 <h3 class="border-bottom py-2">마켓 이름 :{{ product.market.name }}</h3>
 
 {% for question in question_list %}
-<div>{{ question.body }}</div>
+<div>질문 내용 : {{ question.body }}</div>
+<small> 작성자 : {{ question.user }}</small>
 <div class="my-3">
     <a href="{% url 'products:question_modify' product.id question.id %}"
        class="btn btn-sm btn-outline-secondary">수정</a>
     <a href="{% url 'products:question_delete' product.id question.id %}"
        class="btn btn-sm btn-outline-secondary">삭제</a>
+
 </div>
 {% endfor %}
 <form action="{% url 'products:question_create' product.id %}" method="post" class="my-3">
     {% csrf_token %}
     {% if form.errors %}
-    <div class="alert alert-dange" role="alert">
+    <div class="alert alert-dange" role="alert" style="background-color : red">
         {% for field in form %}
         {% if field.errors %}
         <strong>{{field.label}}</strong>

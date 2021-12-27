@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'markets.apps.MarketsConfig',
     'questions.apps.QuestionsConfig',
     'products.apps.ProductsConfig',
-
+    'base.apps.BaseConfig',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +148,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

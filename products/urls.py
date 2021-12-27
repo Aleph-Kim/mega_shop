@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 import questions.views
 from products import views
