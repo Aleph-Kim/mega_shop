@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -26,3 +27,11 @@ def detail(request, product_id):
                    content_type=ContentType.objects.get(app_label='products', model='product')).filter(
                    object_id=product_id)}
     return render(request, 'products/product_detail.html', context)
+
+
+def search(request):
+    product_list = Product.objects.all()
+    q = request.GET.get('q', '')
+    product_list = product_list.filter(display_name__icontains=q)
+    context = {'product_list': product_list, 'q': q}
+    return render(request, 'products/product_list.html', context)
