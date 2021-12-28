@@ -1,29 +1,25 @@
 {% extends 'layout.html' %}
 {% block content %}
-<table class="table">
-    <thead>
-    <tr class="text-center thead-dark">
-        <th>상품 번호</th>
-        <th style="width:50%">상품 이름</th>
-        <th>상품 가격</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% if product_list %}
-    {% for product in product_list %}
-    <tr class="text-center">
-        <td>{{ product.id }}</td>
-        <td><a href="{% url 'products:detail' product.id %}">{{ product.display_name}}</a></td>
-        <td>{{ product.sale_price }}</td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-        <td colspan="3">상품이 없습니다.</td>
-    </tr>
-    {% endif %}
-    </tbody>
-</table>
+<section class="section-prod-list t-mt-3">
+    <div class="container">
+        {% if product_list %}
+        <h1 class="t-text-[1.5rem] t-font-bold">상품 리스트</h1>
+        <ul class="t-grid t-grid-cols-1 sm:t-grid-cols-2 md:t-grid-cols-3 la:t-grid-cols-4 t-gap-[20px] t-p-0 t-mt-3">
+            {% for product in product_list %}
+            <li class="t-flex t-flex-col t-text-center">
+                <img src="https://picsum.photos/id/{{product.id}}/300/300" alt="">
+                <a href="{% url 'products:detail' product.id %}">{{ product.display_name }}</a>
+                <a href="{% url 'products:detail' product.id %}">{{ product.sale_price }}원</a>
+            </li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <tr>
+            <td colspan="3">상품이 없습니다.</td>
+        </tr>
+        {% endif %}
+    </div>
+</section>
 <!--페이징 시작-->
 <ul class="pagination justify-content-center">
     <!--첫 페이지로 이동-->
