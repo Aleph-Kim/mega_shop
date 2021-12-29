@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% load humanize %}
 {% block content %}
-{% with img_class="t-relative" %}
-{% with img_after_class="after:t-border-white after:t-border-solid after:t-p-2 after:t-border-2 after:t-rounded after:t-hidden hover:after:t-block after:t-content-['VIEW_MORE'] after:t-absolute  after:t-text-white after:t-top-[50%] after:t-left-[50%] after:t-translate-y-[-50%] after:t-translate-x-[-50%]" %}
-{% with img_before_class="before:t-absolute before:t-inset-0 hover:before:t-bg-[#00000000] before:t-content-[''] hover:before:t-bg-[#00000035]" %}
+{% with img_class="t-relative t-text-center" %}
+{% with img_after_class="after:t-border-white after:t-border-solid after:t-p-2 after:t-border-2 after:t-rounded after:t-hidden hover:after:t-block after:t-content-[attr(data-before)] after:t-absolute  after:t-text-white after:t-top-[50%] after:t-left-[50%] after:t-translate-y-[-50%] after:t-translate-x-[-50%] after:t-transition-all" %}
+{% with img_before_class="before:t-absolute before:t-inset-0 hover:before:t-bg-[#00000000] before:t-content-[''] hover:before:t-bg-[#00000035] before:t-transition-all" %}
 
 <section class="section-prod-list t-mt-3">
     <div class="container">
@@ -13,7 +13,7 @@
             {% for product in product_list %}
             <a href="{% url 'products:detail' product.id %}">
                 <li class="t-flex t-flex-col">
-                    <span class="{{img_class}} {{img_after_class}} {{img_before_class}}">
+                    <span data-before="상품 보기" class="{{img_class}} {{img_after_class}} {{img_before_class}} t-delay-100">
                         <img class="t-block t-w-full" src="https://picsum.photos/id/{{product.id}}/300/300" alt="">
                     </span>
                     <sapn class="t-text-center">{{ product.display_name }}</sapn>

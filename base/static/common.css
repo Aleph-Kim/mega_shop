@@ -71,6 +71,20 @@
   font-weight: 700;
 }
 
+.t-transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.t-delay-100 {
+  transition-delay: 100ms;
+}
+
+.t-duration-100 {
+  transition-duration: 100ms;
+}
+
 @font-face {
   font-family: 'GmarketSansMedium';
 
@@ -108,6 +122,13 @@ html > body :is(h1, h2, h3, h4, h5, h6) {
   content: var(--tw-content);
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.before\:t-transition-all::before {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .before\:t-content-\[\'VIEWMORE\'\]::before {
@@ -281,6 +302,13 @@ html > body :is(h1, h2, h3, h4, h5, h6) {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.after\:t-transition-all::after {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .after\:t-content-\[\'hello\'\]::after {
   --tw-content: 'hello';
   content: var(--tw-content);
@@ -313,6 +341,26 @@ html > body :is(h1, h2, h3, h4, h5, h6) {
 
 .after\:t-content-\[\'VIEW_MORE\'\]::after {
   --tw-content: 'VIEW MORE';
+  content: var(--tw-content);
+}
+
+.after\:t-content-\[\{\{product\.display_name\}\}qweqwe\]::after {
+  --tw-content: {{product.display name}}qweqwe;
+  content: var(--tw-content);
+}
+
+.after\:t-content-\[attr\(\{\{product\.display_name\}\}\(data-before\)\)\]::after {
+  --tw-content: attr({{product.display name}}(data-before));
+  content: var(--tw-content);
+}
+
+.after\:t-content-\[attr\(data-before\)\]::after {
+  --tw-content: attr(data-before);
+  content: var(--tw-content);
+}
+
+.after\:t-content-\[\{\{product\.display_name\}\}attr\(data-before\)\]::after {
+  --tw-content: {{product.display name}}attr(data-before);
   content: var(--tw-content);
 }
 
