@@ -13,7 +13,7 @@ def index(request):
 
     product_list = Product.objects.all().order_by('-id')
 
-    paginator = Paginator(product_list, 10)  # Paginator 클래스 사용, 한 페이지당 5개씩 보여주기
+    paginator = Paginator(product_list, 8)  # Paginator 클래스 사용, 한 페이지당 5개씩 보여주기
     page_obj = paginator.get_page(page)  # 요청된 page에 해당되는 객체를 page_obj에 담는다.
 
     context = {'product_list': page_obj}
