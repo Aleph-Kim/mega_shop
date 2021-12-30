@@ -1,33 +1,71 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h2 class="border-bottom py-2">{{ product.display_name }}</h2>
-<h3 class="border-bottom py-2">상품 번호 : {{ product.id }}</h3>
-<h3 class="border-bottom py-2">가격 : {{ product.sale_price }}</h3>
-<h3 class="border-bottom py-2">마켓 이름 :{{ product.market.name }}</h3>
+<section class="section-prod-list t-mt-3">
+    <div class="container">
+        <div class="card t-p-3">
+            <h1 class="t-text-[1.5rem] t-font-bold card-header">기본 정보</h1>
+            <ul class="t-flex t-flex-col t-mt-3 card-body list-group">
+                <div class="list-group-item">
+                    <img src="{{product.thumb_img_url}}" alt="" class="img-thumbnail">
+                </div>
+                <li class="list-group-item">번호 : <span class="badge bg-primary">{{ product.id }}</span></li>
+                <li class="list-group-item">등록 : {{ product.reg_date }}</li>
+                <li class="list-group-item">수정 : {{ product.update_date }}</li>
+                <li class="list-group-item">이름 : {{ product.display_name }}</li>
+                <li class="list-group-item">가격 : {{ product.sale_price }}원</li>
+                <li class="list-group-item">마켓 : <span class="badge bg-success">{{ product.market.name }}</span></li>
+            </ul>
+        </div>
+        <div class="card t-p-3">
+            <h1 class="t-text-[1.5rem] t-font-bold card-header">옵션</h1>
+            <ul class="card-body list-group">
+                <li class="list-group-item t-flex t-flex-col table table-hover">
+                    {% for product_real in product_real_list %}
+                    <span class="t-p-3"><input class="form-check-input me-1" type="checkbox" value=""
+                                               aria-label="...">
+                        {{product_real.option_1_type}}: <span class="badge rounded-pill bg-secondary">{{product_real.option_1_display_name}}</span> / {{product_real.option_2_type}}: <span
+                                class="badge rounded-pill bg-secondary">{{product_real.option_2_display_name}}</span>
+                        </span>
+                    {% endfor %}
+                </li>
+                <a href="#" class="btn btn-primary t-w-[100px]">장바구니</a>
+            </ul>
+        </div>
 
-{% for question in question_list %}
-<div>질문 내용 : {{ question.body }}</div>
-<small> 작성자 : {{ question.user }}</small>
-<div class="my-3">
-    <a href="{% url 'products:question_modify' product.id question.id %}"
-       class="btn btn-sm btn-outline-secondary">수정</a>
-    <a href="{% url 'products:question_delete' product.id question.id %}"
-       class="btn btn-sm btn-outline-secondary">삭제</a>
-
-</div>
-{% endfor %}
-<form action="{% url 'products:question_create' product.id %}" method="post" class="my-3">
-    {% csrf_token %}
-    {% if form.errors %}
-    <div class="alert alert-dange" role="alert" style="background-color : red">
-        {% for field in form %}
-        {% if field.errors %}
-        <strong>{{field.label}}</strong>
-        {{field.errors}}
-        {% endif %}
-        {% endfor %}
+        <!--question_list-->
+        <div class="card t-p-3 t-pb-0">
+            <h1 class="t-text-[1.5rem] t-font-bold card-header">질문 목록</h1>
+            <ul class="t-flex t-flex-col t-mt-3 card-body list-group list-group-numbered t-pb-0">
+                {% for question in question_list %}
+                <li class="list-group-item">
+                    <span class="t-mb-2 t-font-bold">질문</span>
+                    <div>질문 내용 : {{ question.body }}</div>
+                    <div>작성자 : {{ question.user }}</div>
+                    <span>
+                        <a href="{% url 'products:question_modify' product.id question.id %}"
+                           class="btn btn-sm btn-outline-secondary">수정</a>
+                        <a href="{% url 'products:question_delete' product.id question.id %}"
+                           class="btn btn-sm btn-outline-secondary">삭제</a>
+                    </span>
+                </li>
+                {% endfor %}
+                <!--question_create-->
+                <form action="{% url 'products:question_create' product.id %}" method="post" class="my-3">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-dange" role="alert" style="background-color : red">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <strong>{{field.label}}</strong>
+                        {{field.errors}}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <input type="submit" value="질문하기" class="btn btn-primary">
+                </form>
+            </ul>
+        </div>
     </div>
-    {% endif %}
-    <input type="submit" value="질문하기" class="btn btn-primary">
-</form>
+</section>
 {% endblock %}

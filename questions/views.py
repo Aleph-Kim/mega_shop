@@ -2,11 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, redirect, get_object_or_404
-
 # Create your views here.
 from django.utils import timezone
 
-from products.models import Product
 from questions.form import QuestionForm
 from questions.models import Question
 
@@ -22,6 +20,7 @@ def create(request, product_id):
             question.reg_date = timezone.now()
             question.object_id = product_id
             question.save()
+            messages.success(request, "질문이 등록되었습니다.")
             return redirect('products:detail', product_id)
     else:
         form = QuestionForm()

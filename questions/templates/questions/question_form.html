@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-<form method="post" class="post-form my-3">
+<form method="post" class="post-form">
     {% csrf_token %}
     <!-- 오류표시 Start -->
     {% if form.errors %}
-    <div class="alert alert-danger t-bg-blue" role="alert">
+    <div class="alert alert-danger" role="alert">
         {% for field in form %}
         {% if field.errors %}
-        <strong>{{ field.label }}</strong>
+        {{ field.label }}
         {{ field.errors }}
         {% endif %}
         {% endfor %}
@@ -15,7 +15,7 @@
     {% endif %}
     <!-- 오류표시 End -->
     <div class="form-group">
-        <h3>질문하기</h3>
+        <h3 class="t-text-[1.5rem] t-mb-[10px]">질문하기</h3>
         <label for="body">내용</label>
         <textarea class="form-control" name="body"
                   id="body" rows="10">{{ form.body.value|default_if_none:'' }}</textarea>

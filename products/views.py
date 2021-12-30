@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from products.models import Product
+from products.models import Product, ProductReal
 from questions.models import Question
 
 
@@ -22,10 +22,13 @@ def index(request):
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+    product_real_list = ProductReal.objects.filter(product=product)
+    question_list = Question.objects.filter(
+        content_type=ContentType.objects.get(app_label='products', model='product')).filter(
+        object_id=product_id)
     context = {'product': product,
-               'question_list': Question.objects.filter(
-                   content_type=ContentType.objects.get(app_label='products', model='product')).filter(
-                   object_id=product_id)}
+               'question_list': question_list,
+               'product_real_list': product_real_list}
     return render(request, 'products/product_detail.html', context)
 
 

@@ -12,7 +12,14 @@
 </head>
 <body>
 {% include "navbar.html" %}
-<section  class="t-flex-1">
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} t-text-center">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<section class="t-flex-1">
     {% block content %}
     {% endblock %}
 </section>

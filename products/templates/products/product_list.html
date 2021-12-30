@@ -14,7 +14,7 @@
             <a href="{% url 'products:detail' product.id %}">
                 <li class="t-flex t-flex-col">
                     <span data-before="상품 보기" class="{{img_class}} {{img_after_class}} {{img_before_class}} t-delay-100">
-                        <img class="t-block t-w-full" src="https://picsum.photos/id/{{product.id}}/300/300" alt="">
+                        <img class="t-block t-w-full" src="{{product.thumb_img_url}}" alt="">
                     </span>
                     <sapn class="t-text-center">{{ product.display_name }}</sapn>
                     <span class="t-text-center">{{ product.sale_price|intcomma }}원</span>
