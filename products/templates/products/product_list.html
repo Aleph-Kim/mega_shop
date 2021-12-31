@@ -4,90 +4,92 @@
 {% with img_class="t-relative t-text-center" %}
 {% with img_after_class="after:t-border-white after:t-border-solid after:t-p-2 after:t-border-2 after:t-rounded after:t-hidden hover:after:t-block after:t-content-[attr(data-before)] after:t-absolute  after:t-text-white after:t-top-[50%] after:t-left-[50%] after:t-translate-y-[-50%] after:t-translate-x-[-50%] after:t-transition-all" %}
 {% with img_before_class="before:t-absolute before:t-inset-0 hover:before:t-bg-[#00000000] before:t-content-[''] hover:before:t-bg-[#00000035] before:t-transition-all" %}
-
-<section class="section-prod-list t-mt-3">
-    <div class="container">
-        {% if product_list %}
-        <h1 class="t-text-[1.5rem] t-font-bold">상품 리스트</h1>
-        <ul class="t-grid t-grid-cols-1 xs:t-grid-cols-2 sm:t-grid-cols-3 md:t-grid-cols-4 lg:t-grid-clos-5 t-gap-[20px]  t-p-0 t-mt-3">
-            {% for product in product_list %}
-            <a href="{% url 'products:detail' product.id %}">
-                <li class="t-flex t-flex-col">
-                    <span data-before="상품 보기" class="{{img_class}} {{img_after_class}} {{img_before_class}} t-delay-100">
+<div class="t-h-[100wh] t-pt-[5rem]">
+    <section class="section-prod-list">
+        <div class="container">
+            {% if product_list %}
+            <h1 class="t-text-[1.5rem] t-font-bold">상품 리스트</h1>
+            <ul class="t-grid t-grid-cols-1 xs:t-grid-cols-2 sm:t-grid-cols-3 md:t-grid-cols-4 lg:t-grid-clos-5 t-gap-[20px]  t-p-0 t-mt-3">
+                {% for product in product_list %}
+                <a href="{% url 'products:detail' product.id %}">
+                    <li class="t-flex t-flex-col">
+                    <span data-before="상품 보기"
+                          class="{{img_class}} {{img_after_class}} {{img_before_class}} t-delay-100">
                         <img class="t-block t-w-full" src="{{product.thumb_img_url}}" alt="">
                     </span>
-                    <sapn class="t-text-center">{{ product.display_name }}</sapn>
-                    <span class="t-text-center">{{ product.sale_price|intcomma }}원</span>
-                </li>
-            </a>
-            {% endfor %}
-        </ul>
+                        <sapn class="t-text-center">{{ product.display_name }}</sapn>
+                        <span class="t-text-center">{{ product.sale_price|intcomma }}원</span>
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <tr>
+                <td colspan="3">상품이 없습니다.</td>
+            </tr>
+            {% endif %}
+        </div>
+    </section>
+    <!--페이징 시작-->
+    <ul class="pagination justify-content-center t-mb-0">
+        <!--첫 페이지로 이동-->
+        {% if product_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">처음</a>
+        </li>
         {% else %}
-        <tr>
-            <td colspan="3">상품이 없습니다.</td>
-        </tr>
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">처음</a>
+        </li>
         {% endif %}
-    </div>
-</section>
-<!--페이징 시작-->
-<ul class="pagination justify-content-center">
-    <!--첫 페이지로 이동-->
-    {% if product_list.has_previous %}
-    <li class="page-item">
-        <a class="page-link" href="?page=1">처음</a>
-    </li>
-    {% else %}
-    <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">처음</a>
-    </li>
-    {% endif %}
-    <!--이전 페이지로 이동-->
-    {% if product_list.has_previous %}
-    <li class="page-item">
-        <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
-    </li>
-    {% else %}
-    <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전</a>
-    </li>
-    {% endif %}
-    <!--페이지 리스트-->
-    {% for page_number in product_list.paginator.page_range %}
-    {% if page_number >= product_list.number|add:-3 and page_number <= product_list.number|add:3 %}
-    <!--|add:-3 는 템플릿 필터이다. add:-3은 3만큼 빼라는 의미-->
-    {% if page_number == product_list.number %}
-    <li class="page-item active" aria-current="page">
-        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-    </li>
-    {% else %}
-    <li class="page-item">
-        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-    </li>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-    <!--다음 페이지로 이동-->
-    {% if product_list.has_next %}
-    <li class="page-item">
-        <a class="page-link" href="?page={{ product_list.next_page_number }}">다음</a>
-    </li>
-    {% else %}
-    <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">다음</a>
-    </li>
-    {% endif %}
-    <!--마지막 페이지로 이동-->
-    {% if product_list.has_next %}
-    <li class="page-item">
-        <a class="page-link" href="?page={{ product_list.paginator.num_pages }}">마지막</a>
-    </li>
-    {% else %}
-    <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">마지막</a>
-    </li>
-    {% endif %}
-</ul>
-{% endwith %}
-{% endwith %}
-{% endwith %}
+        <!--이전 페이지로 이동-->
+        {% if product_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전</a>
+        </li>
+        {% endif %}
+        <!--페이지 리스트-->
+        {% for page_number in product_list.paginator.page_range %}
+        {% if page_number >= product_list.number|add:-3 and page_number <= product_list.number|add:3 %}
+        <!--|add:-3 는 템플릿 필터이다. add:-3은 3만큼 빼라는 의미-->
+        {% if page_number == product_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!--다음 페이지로 이동-->
+        {% if product_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">다음</a>
+        </li>
+        {% endif %}
+        <!--마지막 페이지로 이동-->
+        {% if product_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.paginator.num_pages }}">마지막</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">마지막</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endwith %}
+    {% endwith %}
+    {% endwith %}
+</div>
 {% endblock %}

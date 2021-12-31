@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<section class="section-prod-list t-mt-3">
+<section class="section-prod-list t-pt-[5rem]">
     <div class="container">
         <div class="card t-p-3">
             <h1 class="t-text-[1.5rem] t-font-bold card-header">기본 정보</h1>
@@ -19,6 +19,7 @@
         <div class="card t-p-3">
             <h1 class="t-text-[1.5rem] t-font-bold card-header">옵션</h1>
             <ul class="card-body list-group">
+                {% if product_real_list %}
                 <li class="list-group-item t-flex t-flex-col table table-hover">
                     {% for product_real in product_real_list %}
                     <span class="t-p-3"><input class="form-check-input me-1" type="checkbox" value=""
@@ -28,6 +29,9 @@
                         </span>
                     {% endfor %}
                 </li>
+                {% else %}
+                <div class="list-group-item t-mb-[10px]">옵션이 없는 상품입니다.</div>
+                {% endif %}
                 <a href="#" class="btn btn-primary t-w-[100px]">장바구니</a>
             </ul>
         </div>
@@ -36,6 +40,7 @@
         <div class="card t-p-3 t-pb-0">
             <h1 class="t-text-[1.5rem] t-font-bold card-header">질문 목록</h1>
             <ul class="t-flex t-flex-col t-mt-3 card-body list-group list-group-numbered t-pb-0">
+                {% if question_list %}
                 {% for question in question_list %}
                 <li class="list-group-item">
                     <span class="t-mb-2 t-font-bold">질문</span>
@@ -49,6 +54,9 @@
                     </span>
                 </li>
                 {% endfor %}
+                {% else %}
+                <div class="list-group-item">질문이 없습니다.</div>
+                {% endif %}
                 <!--question_create-->
                 <form action="{% url 'products:question_create' product.id %}" method="post" class="my-3">
                     {% csrf_token %}

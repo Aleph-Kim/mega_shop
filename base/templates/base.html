@@ -1,4 +1,18 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>megashop입니다</h1>
+<section class="t-flex t-flex-col t-min-h-screen t-min-w-screen">
+    <section class="t-flex t-flex-1 t-flex-col t-items-center t-justify-center">
+        <div class="t-flex t-whitespace-nowrap t-text-[5vw]">나만의 작은 쇼핑몰</div>
+        <div class="btn-group t-w-[50%] t-whitespace-nowrap" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="button" class="btn-check" id="btncheck1" autocomplete="off">
+            <label class="btn btn-outline-dark t-w-[30%]" for="btncheck1">mega shop 소개</label>
+
+            <input type="button" class="btn-check" id="btncheck2" autocomplete="off" onclick="location.href='products/list/'">
+            <label class="btn btn-outline-dark t-w-[30%]" for="btncheck2">상품 리스트</label>
+
+            <input type="button" class="btn-check" id="btncheck3" autocomplete="off" onclick="location.href='accounts/login/'">
+            <label class="btn btn-outline-dark t-w-[30%]" for="btncheck3">로그인</label>
+        </div>
+    </section>
+</section>
 {% endblock %}
